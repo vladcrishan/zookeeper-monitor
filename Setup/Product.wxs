@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?define ProductName="ZooKeeper Manager"?>
+<?define Manufacturer="Blue Matrix I LLC"?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="$(var.ProductName)" Language="1033" Version="1.0.0.0" Manufacturer="$(var.Manufacturer)" UpgradeCode="e0d53c36-f626-44e9-93ef-4a0d7fec3d51">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes"/>
+
+    <Feature Id="ProductFeature" Title="Setup" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+
+      <!--StartMenu-->
+      <ComponentRef Id="CMP_StartMenuShortcut" />
+
+      <!--Desktop-->
+      <ComponentRef Id="CMP_DesktopShortcut" />
+    </Feature>
+
+
+    <!--
+    WixUI_Advanced    
+    WixUI_FeatureTree
+    WixUI_InstallDir    
+    WixUI_Minimal    
+    WixUI_Mondo
+    -->
+    <UIRef Id="WixUI_Minimal"/>
+
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="BlueMatrixDirectory" Name="Blue Matrix">
+          <Directory Id="INSTALLFOLDER" Name="$(var.ProductName)" />
+        </Directory>
+      </Directory>
+
+      <!-- Start Menu Shortcut-->
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="StartMenuDirectory" Name="$(var.ProductName)" />
+      </Directory>
+
+      <!--Desktop Shortcut-->
+      <Directory Id="DesktopFolder" SourceName="Desktop" />
+
+    </Directory>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+
+      <!--App.config-->
+      <Component Id="CMP_App_config" Guid="{7A963394-E3B1-4761-968F-BF28B3433374}">
+        <File Id="File_App_config" Source="$(var.ZookeeperMonitor.TargetDir)\ZookeeperMonitor.exe.config" Name ="$(var.ProductName).exe.config" KeyPath="yes"/>
+      </Component>
+
+      <!--Main Exe-->
+      <Component Id="CMP_ZookeeperMonitor_exe" Guid="{A67FC1AE-CCFF-426D-A6F4-3790347B1875}">
+        <File Id="File_ZooKeeperSecond_exe" Source="$(var.ZookeeperMonitor.TargetDir)\ZookeeperMonitor.exe" Name ="$(var.ProductName).exe" KeyPath="yes"/>
+      </Component>
+
+      <!--Zookeeper.dll-->
+      <Component Id="CMP_ZookeeperMonitor_dll" Guid="{302DADAE-0DD6-406D-972D-C2C8D5A02CDD}">
+        <File Id="File_ZooKeeperSecond_dll" Source="$(var.ZookeeperMonitor.TargetDir)\ZooKeeperNet.dll" KeyPath="yes"/>
+      </Component>
+
+      <!--log4net-->
+      <Component Id="CMP_log4net_dll" Guid="{C9DE079A-9A20-451C-874D-1891FF45EF78}">
+        <File Id="File_log4net_dll" Source="$(var.ZookeeperMonitor.TargetDir)\log4net.dll" KeyPath="yes"/>
+      </Component>
+
+    </ComponentGroup>
+
+    <!-- Start Menu Shortcut_2-->
+    <DirectoryRef Id="StartMenuDirectory">
+      <Component Id="CMP_StartMenuShortcut" Guid="{A8DEF0FD-FAC4-4980-807C-D959901561F8}" >
+
+        <Shortcut Id="AppConfigShortcut"
+                  Name="$(var.ProductName).exe.config"
+                  Description="Configuration File"
+                  Target="[INSTALLFOLDER]$(var.ProductName).exe.config" />
+
+        <Shortcut Id="MainShortcut"
+                  Name="$(var.ProductName)"
+                  Description="Application"
+                  Target="[INSTALLFOLDER]$(var.ProductName).exe" />
+
+        <RemoveFolder Id="RemoveMyShortcutsDir"
+                      On="uninstall" />
+
+        <Shortcut Id="UninstallShortcut"
+                  Name="Uninstall $(var.ProductName)"
+                  Description="Uninstalls $(var.ProductName) and all of its components"
+                  Target="[System64Folder]msiexec.exe"
+                   Arguments="/x [ProductCode]" />
+
+        <RegistryValue Root="HKCU"
+                       Key="Software\Microsoft\$(var.ProductName)_StartMenu"
+                       Name="installed"
+                       Type="integer"
+                       Value="1"
+                       KeyPath="yes" />
+
+      </Component>
+    </DirectoryRef>
+
+    <!--Desktop Shortcut_2-->
+    <DirectoryRef Id="DesktopFolder">
+      <Component Id="CMP_DesktopShortcut" Guid="{0FD6BC39-FE64-448F-98D8-71FFD9B48BA1}" >
+
+        <Shortcut Id="MainDesktopShortcut"
+                  Name="Zookeeper Manager"
+                  Target="[INSTALLFOLDER]$(var.ProductName).exe" />
+
+        <RegistryValue Root="HKCU"
+                       Key="Software\Microsoft\$(var.ProductName)_Desktop"
+                       Name="installed"
+                       Type="integer"
+                       Value="1"
+                       KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+  </Fragment>
+</Wix>

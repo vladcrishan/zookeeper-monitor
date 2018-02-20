@@ -35,7 +35,7 @@
   <Fragment>
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
-        <Directory Id="BlueMatrixDirectory" Name="Blue Matrix">
+        <Directory Id="BlueMatrixDirectory" Name="BlueMatrix">
           <Directory Id="INSTALLFOLDER" Name="$(var.ProductName)" />
         </Directory>
       </Directory>

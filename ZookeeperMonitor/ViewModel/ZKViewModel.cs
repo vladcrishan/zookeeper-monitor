@@ -9,7 +9,6 @@ namespace ZookeeperMonitor.ViewModel
     class ZKViewModel
     {
         private MainModel _mainModel;
-        private string _isChangedScroll;
 
         public ZKViewModel(MainModel _mainModel)
         {
@@ -27,21 +26,9 @@ namespace ZookeeperMonitor.ViewModel
             UploadConfigCommand = new RelayCommand(UploadConfigAction);
             UploadFontsCommand = new RelayCommand(UploadFontsAction);
             TestCommand = new RelayCommand(TestAction);
-            _isChangedScroll = "true";
         }
 
-        /// <summary>
-        /// Commands
-        /// </summary>
-        public string IsChangedScroll
-        {
-            get { return _isChangedScroll; }
-            set
-            {
-                _isChangedScroll = value;
-                _mainModel.OnPropertyChanged("IsChangedScroll");
-            }
-        }
+       
         public ICommand ExitCommand { get; private set; }
         public ICommand ListCommand { get; private set; }
         public ICommand CreateCommand { get; private set; }
@@ -66,7 +53,6 @@ namespace ZookeeperMonitor.ViewModel
 
         public void ListAction()
         {
-            IsChangedScroll = "afdasdgasdgsd";
             _mainModel.List();
         }
 

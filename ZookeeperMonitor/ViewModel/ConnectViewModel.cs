@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 using ZookeeperMonitor.Command;
 using ZookeeperMonitor.Model;
 using ZookeeperMonitor.View;
@@ -11,7 +12,8 @@ namespace ZookeeperMonitor.ViewModel
         private ZKViewModel _zkViewModel;
 
         public delegate void ButtonClickEvent();
-        public event ButtonClickEvent ButtonClicked = delegate { }; 
+        public event ButtonClickEvent ButtonClicked = delegate { };
+        public string HostName { get; set; }
 
         public ConnectViewModel()
         {
@@ -20,14 +22,15 @@ namespace ZookeeperMonitor.ViewModel
             HostName = "10.10.10.239"; // local zookeeper
             //HostName = "cargo301,cargo302,cargo303";
             ConnectCommand = new RelayCommand(ConnectAction);
+            EnterKeyCommand = new RelayCommand(ConnectAction);
         }
 
-        public string HostName { get; set; }
 
         /// <summary>
         /// Commands
         /// </summary>
         public ICommand ConnectCommand { get; private set; }
+        public ICommand EnterKeyCommand { get; private set; }
 
         /// <summary>
         /// Actions

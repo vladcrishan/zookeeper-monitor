@@ -14,7 +14,7 @@ namespace ZookeeperMonitor.View
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
 
             InitializeComponent();
-            var connectViewModel = new ConnectViewModel();
+            ConnectViewModel connectViewModel = new ConnectViewModel();
 
             // Data binding
             DataContext = connectViewModel;
@@ -22,6 +22,5 @@ namespace ZookeeperMonitor.View
             // Hide window after pass
             connectViewModel.ButtonClicked += this.Hide;
         }
-
     }
 }

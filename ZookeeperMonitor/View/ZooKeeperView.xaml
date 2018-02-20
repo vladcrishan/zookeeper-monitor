@@ -36,8 +36,8 @@
 
             <Label Grid.Row="0" VerticalAlignment="Top"  HorizontalAlignment="Left" Margin="0,30,0,0"  Content="New Znode/Value: "/>
             <TextBox Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="150,30,0,0" Width="200" Text="{Binding MainModel.Input2}"/>
-            <ScrollViewer Grid.Row="1" local:Helper.AutoScroll="true">
-                <TextBox  Text="{Binding MainModel.Output, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" Background="Black" Foreground="Azure"/>
+            <ScrollViewer Name="zkScrollView" Grid.Row="1" local:Helper.AutoScroll="true" >
+                <TextBox  Text="{Binding MainModel.Output, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" Background="Black" Foreground="Azure" TextChanged="scroll"/>
             </ScrollViewer>
             <Label Grid.Row="0" Content="{Binding IsChangeScroll}" Margin="0,50,0,0"/>
         </Grid>

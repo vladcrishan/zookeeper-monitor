@@ -27,5 +27,13 @@ namespace ZookeeperMonitor.View
 
             InitializeComponent();
         }
+
+        /// <summary>
+        /// Don't know why I need this. Investigate
+        /// </summary>
+        private void scroll(object sender, TextChangedEventArgs e)
+        {
+            zkScrollView.ScrollToBottom();
+        }
     }
 }
